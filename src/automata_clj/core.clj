@@ -5,97 +5,93 @@
     :in2 0
     :in3 0
     :out 0},
+
    {:in1 0
     :in2 0
     :in3 1
-    :out 0},
+    :out 1},
+   
    {:in1 0
     :in2 1
     :in3 0
-    :out 0},
+    :out 1},
+
    {:in1 0
     :in2 1
     :in3 1
     :out 1},
+
    {:in1 1
     :in2 0
     :in3 0
     :out 1},
+
    {:in1 1
     :in2 0
     :in3 1
     :out 0},
+
    {:in1 1
     :in2 1
     :in3 0
     :out 0},
+
    {:in1 1
     :in2 1
     :in3 1
     :out 0},
    ])
 
-(def origin (str (apply str (repeat 20 0)) 1 (apply str (repeat 20 0))))
+(def origin (vec (flatten (conj  (repeat 20 0) 1 (repeat 20 0) ))))
 
 (defn applyRules [in1 in2 in3] 
   (for [r rules :when (and 
                       (= (r :in1) in1)
                       (= (r :in2) in2)
                       (= (r :in3) in3))]
+      (r :out)))
 
-      (r :out)
-    ))
+(defn genLine [input]
+  (vec 
+    (flatten 
+      (map #(applyRules (first %) (second %) (last %)) 
+         (partition 3 1 input)))))
 
-(defn applyRules [inStr] 
-  (for [r rules :when (and 
-                      (= (r :in1) (first inStr))
-                      (= (r :in2) (first inStr))
-                      (= (r :in3) (first inStr)))]
-
-      (r :out)
-    )
-  )
-(defn calc [line] 
-    (for [t (partition 2 1 "123456")]
-      ;(println (str (first t) (second t) (last t)))
-      ;(println (applyRules (str (first t)) (str (second t)) (str (last t))))
-      (print  t)
-;      (cons out (applyRules (first t) (second t) (last t)) )
-  )
-)
+(defn cmap [coll]
+  (if (seq coll)
+    (lazy-seq 
+      (cons coll 
+        (cmap (genLine (cons 0 (conj coll 0 ))))))))
 
 
-  (for [r rules :when (and 
-                      (= (r :in1) 0)
-                      (= (r :in2) 0)
-                      (= (r :in3) 0))]
-
-      (r :out)
-    )
-
-(defn calc [line] 
-  (let [a (cons 1  (cons 2 nil ))]  a))    
-
-(def parts (partition 3 1 [0 0 0 1 0 1 0 0 0 0 1 1]))
-(map str (first parts) (second parts) (last parts))
-
-
-(map #(applyRules (first % ) (second %) (last %)) parts)
-
-(applyRules "100")
-
-(first (first parts))
-
-;(cons (f (first s)) m
-(str origin)
-(partition 3 1 origin)
-(applyRules (first '(1 0 0)) 0 0)
-(calc (str origin))
-(apply str origin) 
-(apply str (rest origin))
 (comment
   (apply str (applyRules 1 0 0))
+  (doall origin)
+  (str (get rules 4))
+
+  (flatten 
+   (map #(applyRules (first %) (second %) (last %)) 
+    (partition 3 1 origin)))
+  
+  (partition 3 1 (cons 0 origin))
+  
+  
+  (vec (flatten (repeat 4 0)))
+   (conj  (repeat 5 0) 1 (repeat 5 0) )
+  (conj '(0 0 0) 4)
+  (cons 2 (conj origin  3))
+  (cons 2 origin  )
+  
+  (doall origin)
+  (zz origin)
+  (zz (zz origin))
+  (zz (zz (zz origin)))
+  (zz (zz (zz (zz origin))))
+  (conj (zz origin) (zz (zz origin)) (zz (zz (zz origin) ) ))
+  
+  (take 5 (cmap origin))
+  
+  (lazy-seq (conj origin (zz origin) (zz (zz origin)) (zz (zz (zz origin))) ) )
 )
 
 
-(str (get rules 4))
