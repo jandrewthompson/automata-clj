@@ -2,7 +2,6 @@
   (:use automata-clj.core)
   (:use quil.core))
 
-
 (defn setup []
   (smooth)
   (frame-rate 10)
@@ -19,16 +18,6 @@
         (rect (* (first idx) 10) (* (first l) 10) 5 5)
    )
 ) ))
-
-(defn draw []
-  (stroke (random 255))
-  (stroke-weight (random 20))
-  (fill (random 255))
-
-  (let [diam (random 100)
-        x    (random (width))
-        y    (random (height))]
-    (ellipse  x y diam diam)))
 
 (defsketch example
            :title "Automata"
